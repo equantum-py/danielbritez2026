@@ -1,37 +1,44 @@
 # Portafolio profesional — Daniel Brítez
 
-Repositorio destinado al desarrollo del portafolio web profesional de **Daniel Brítez**, técnico mecánico de motocicletas y automóviles, con experiencia comercial y atención al cliente en el rubro de repuestos.
+Landing page profesional, responsive y lista para Vercel para **Daniel Brítez**, técnico mecánico de motocicletas y automóviles con experiencia comercial en repuestos y atención al cliente.
 
-## Objetivo
+## Stack
 
-Crear un sitio web moderno, técnico, visualmente sólido y totalmente responsive, orientado a presentar el perfil profesional de Daniel ante talleres, concesionarias, empresas del sector automotor y marcas de motocicletas de alta gama.
+- Next.js App Router
+- TypeScript estricto
+- Tailwind CSS
+- Lucide React
+- ESLint
+- Fuentes optimizadas con `next/font`
 
-## Datos principales
+## Comandos
 
-- **Nombre:** Daniel Brítez
-- **Perfil:** Técnico mecánico de motocicletas y automóviles / Ejecutivo comercial de repuestos
-- **Residencia:** Limpio, Paraguay
-- **Teléfono:** +595 976 546 438
-- **Movilidad propia:** Sí
-- **Disponibilidad:** Sí
-- **Trabajo actual:** Biciclo’s Shop
-- **Experiencia previa:** RD Automóvil
-- **Correo electrónico:** Pendiente de completar
+```bash
+npm install
+npm run dev
+npm run lint
+npm run build
+```
 
-## Desarrollo con Codex
+## Estructura
 
-Las instrucciones completas de diseño, arquitectura, contenido, funcionalidades y criterios de calidad se encuentran en [`CODEX_PROMPT.md`](./CODEX_PROMPT.md).
+- `app/`: layout, página principal, estilos globales, robots y sitemap.
+- `components/`: header, footer, botones y elementos interactivos.
+- `data/portfolio.ts`: fuente central de todo el contenido profesional y datos de contacto.
+- `public/images/`: espacio documentado para fotografías reales.
+- `public/documents/`: espacio documentado para el CV PDF.
 
-## Requisitos generales
+## Contenido centralizado
 
-- Diseño profesional con identidad visual inspirada en la mecánica de precisión.
-- Responsive para móvil, tablet y escritorio.
-- Excelente rendimiento, accesibilidad y SEO.
-- Botón directo de WhatsApp.
-- Currículum descargable.
-- Contenido administrado desde un archivo de datos central.
-- Preparado para despliegue en Vercel.
+Toda la información personal, profesional, SEO, navegación, experiencia, especialidades y mensajes de WhatsApp se edita en `data/portfolio.ts`. No se deben duplicar datos manualmente en componentes.
 
-## Estado
+## Despliegue en Vercel
 
-Proyecto inicializado. Pendiente de desarrollo siguiendo la especificación técnica.
+1. Conectar este repositorio a Vercel.
+2. Usar la configuración automática de Next.js.
+3. Ejecutar build command `npm run build`.
+4. Publicar cuando el CV y las fotos definitivas estén disponibles o mantener los placeholders actuales.
+
+## Datos pendientes
+
+Consultar `CONTENT_PENDING.md` antes de publicar una versión final con información completa.

@@ -1,0 +1,2 @@
+import { portfolio } from '@/data/portfolio';
+export function Footer() { return <footer className="border-t border-white/10 px-4 py-8 text-sm text-muted sm:px-6 lg:px-8"><div className="container-pro flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><p>© {new Date().getFullYear()} {portfolio.person.name}. {portfolio.person.title}.</p><p>Desarrollado por <span className="text-technical">eQuantum</span>.</p></div></footer>; }
