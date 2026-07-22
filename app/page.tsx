@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   ArrowDown,
   Download,
@@ -13,55 +14,42 @@ import { Button } from "@/components/ui/Button";
 import { CopyPhone } from "@/components/ui/CopyPhone";
 import { portfolio, whatsappUrl } from "@/data/portfolio";
 
-function HeroGraphic() {
+function HeroPhoto() {
   return (
-    <div className="panel tech-lines relative min-h-[480px] overflow-hidden p-6">
-      <div className="absolute inset-6 rounded-[2rem] border border-mechanic/30" />
+    <div className="panel tech-lines relative min-h-[480px] overflow-hidden p-3 sm:p-4">
+      <div className="relative min-h-[450px] overflow-hidden rounded-[1.75rem] border border-mechanic/30 bg-carbon">
+        <Image
+          src="/images/daniel-britez-principal.png"
+          alt="Daniel Brítez, técnico mecánico de motocicletas y automóviles"
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 45vw"
+          className="object-cover object-top"
+        />
 
-      <div className="absolute left-1/2 top-20 h-64 w-64 -translate-x-1/2 rounded-full border border-white/15 bg-carbon/70">
-        <div className="absolute inset-8 rounded-full border border-dashed border-mechanic/50" />
-        <div className="absolute inset-20 rounded-full bg-mechanic/20 blur-xl" />
-      </div>
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon via-transparent to-transparent"
+          aria-hidden="true"
+        />
 
-      <svg
-        className="absolute bottom-10 left-1/2 w-[85%] -translate-x-1/2 text-mechanic/80"
-        viewBox="0 0 420 150"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M34 102h60l42-60h96l48 60h106"
-          stroke="currentColor"
-          strokeWidth="3"
+        <div
+          className="pointer-events-none absolute inset-0 opacity-20"
+          aria-hidden="true"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(0,168,90,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(0,168,90,.12) 1px, transparent 1px)",
+            backgroundSize: "42px 42px",
+          }}
         />
-        <circle
-          cx="105"
-          cy="105"
-          r="33"
-          stroke="currentColor"
-          strokeWidth="4"
-        />
-        <circle
-          cx="314"
-          cy="105"
-          r="33"
-          stroke="currentColor"
-          strokeWidth="4"
-        />
-        <path
-          d="M166 72h62l26 33"
-          stroke="#F4F6F7"
-          strokeOpacity=".55"
-          strokeWidth="3"
-        />
-      </svg>
 
-      <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-white/10 bg-carbon/80 p-4">
-        <p className="kicker">Espacio preparado</p>
-        <p className="mt-1 text-sm text-muted">
-          Fotografía profesional pendiente. Placeholder técnico abstracto, sin
-          rostros generados por IA.
-        </p>
+        <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-carbon/85 p-4 backdrop-blur-md sm:bottom-6 sm:left-6 sm:right-6">
+          <p className="kicker">Perfil profesional</p>
+
+          <p className="mt-1 text-sm leading-6 text-technical">
+            Técnico mecánico de motocicletas y automóviles, con experiencia
+            comercial en repuestos y atención al cliente.
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -79,6 +67,7 @@ function SectionTitle({
   return (
     <div className="mb-10 max-w-3xl">
       <p className="kicker">{kicker}</p>
+
       <h2 className="h2">{title}</h2>
 
       {text ? (
@@ -123,7 +112,7 @@ export default function Home() {
                 necesidad.
               </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Button
                   href={whatsappUrl}
                   target="_blank"
@@ -148,7 +137,7 @@ export default function Home() {
                     Descargar CV
                   </Button>
                 ) : (
-                  <span className="inline-flex min-h-12 items-center rounded-full border border-amber/35 bg-amber/10 px-5 text-sm font-semibold text-amber">
+                  <span className="inline-flex min-h-12 items-center justify-center rounded-full border border-amber/35 bg-amber/10 px-5 text-sm font-semibold text-amber">
                     CV pendiente de cargar
                   </span>
                 )}
@@ -178,7 +167,7 @@ export default function Home() {
               </div>
             </div>
 
-            <HeroGraphic />
+            <HeroPhoto />
           </div>
         </section>
 
@@ -225,7 +214,7 @@ export default function Home() {
           <div className="container-pro">
             <SectionTitle
               kicker="Experiencia"
-              title="Trayectoria laboral sin fechas inventadas"
+              title="Trayectoria laboral"
             />
 
             <div className="space-y-6">
@@ -297,8 +286,11 @@ export default function Home() {
                   className="panel flex items-center gap-4 rounded-2xl p-5"
                   key={label}
                 >
-                  <Icon className="text-mechanic" />
-                  <span className="font-semibold">{label}</span>
+                  <Icon className="shrink-0 text-mechanic" />
+
+                  <span className="font-semibold">
+                    {label}
+                  </span>
                 </div>
               ))}
             </div>
@@ -366,7 +358,9 @@ export default function Home() {
           <div className="container-pro">
             <div className="panel grid gap-8 p-8 lg:grid-cols-[.9fr_1.1fr]">
               <div>
-                <p className="kicker">Contacto</p>
+                <p className="kicker">
+                  Contacto
+                </p>
 
                 <h2 className="h2">
                   Hablemos
@@ -387,26 +381,28 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <MessageCircle className="text-mechanic" />
-                  WhatsApp: {p.phoneDisplay}
+                  <MessageCircle className="shrink-0 text-mechanic" />
+                  <span>WhatsApp: {p.phoneDisplay}</span>
                 </a>
 
                 <a
                   className="focus-ring panel flex items-center gap-4 rounded-2xl p-5"
                   href={`tel:${p.phoneHref}`}
                 >
-                  <Phone className="text-mechanic" />
-                  Teléfono: {p.phoneDisplay}
+                  <Phone className="shrink-0 text-mechanic" />
+                  <span>Teléfono: {p.phoneDisplay}</span>
                 </a>
 
                 <div className="panel flex items-center gap-4 rounded-2xl p-5">
-                  <MapPin className="text-mechanic" />
-                  {p.city} · Movilidad propia · Disponibilidad laboral
+                  <MapPin className="shrink-0 text-mechanic" />
+
+                  <span>
+                    {p.city} · Movilidad propia · Disponibilidad laboral
+                  </span>
                 </div>
 
                 <p className="rounded-2xl border border-amber/30 bg-amber/10 p-4 text-sm text-amber">
-                  Correo electrónico pendiente de completar. Actualizar en{" "}
-                  <code>data/portfolio.ts</code>.
+                  Correo electrónico pendiente de completar.
                 </p>
 
                 <CopyPhone />
@@ -418,7 +414,7 @@ export default function Home() {
 
       <a
         className="focus-ring fixed bottom-5 right-5 z-40 grid size-14 place-items-center rounded-full bg-mechanic text-carbon shadow-metal"
-        aria-label="Abrir conversación por WhatsApp"
+        aria-label="Abrir conversación con Daniel por WhatsApp"
         href={whatsappUrl}
         target="_blank"
         rel="noreferrer"
