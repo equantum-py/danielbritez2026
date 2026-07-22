@@ -2,18 +2,235 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: dark; }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 88px; }
-body { margin: 0; background: #0B0D0F; color: #F4F6F7; overflow-x: hidden; }
-body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: -2; background: radial-gradient(circle at 18% 8%, rgba(0,168,90,.24), transparent 30rem), radial-gradient(circle at 84% 14%, rgba(242,169,0,.12), transparent 24rem), radial-gradient(circle at 50% 92%, rgba(43,50,56,.58), transparent 36rem), linear-gradient(135deg, #090B0D 0%, #15191D 48%, #101316 100%); }
-body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .22; background-image: linear-gradient(rgba(244,246,247,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(244,246,247,.08) 1px, transparent 1px), linear-gradient(120deg, rgba(0,168,90,.10), transparent 28%); background-size: 44px 44px, 44px 44px, 100% 100%; mask-image: linear-gradient(to bottom, black, transparent 88%); }
-a { color: inherit; text-decoration: none; }
-.section-pad { @apply px-4 py-14 sm:px-6 md:py-24 lg:px-8; }
-.container-pro { @apply mx-auto max-w-7xl; }
-.panel { @apply rounded-3xl border border-white/10 bg-white/[.045] shadow-metal backdrop-blur; }
-.kicker { @apply font-display text-xs font-semibold uppercase tracking-[0.24em] text-mechanic md:text-sm md:tracking-[0.28em]; }
-.h2 { @apply mt-2 font-display text-3xl font-bold tracking-tight text-technical sm:text-4xl md:mt-3 md:text-5xl; }
-.focus-ring { @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-mechanic; }
-.tech-lines { background-image: linear-gradient(135deg, rgba(255,255,255,.10) 1px, transparent 1px), linear-gradient(45deg, rgba(0,168,90,.16) 1px, transparent 1px); background-size: 36px 36px, 72px 72px; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+:root {
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #0b0d0f;
+  color: #f4f6f7;
+}
+
+body::before {
+  position: fixed;
+  z-index: -2;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 18% 8%,
+      rgba(0, 168, 90, 0.24),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 84% 14%,
+      rgba(242, 169, 0, 0.12),
+      transparent 24rem
+    ),
+    radial-gradient(
+      circle at 50% 92%,
+      rgba(43, 50, 56, 0.58),
+      transparent 36rem
+    ),
+    linear-gradient(
+      135deg,
+      #090b0d 0%,
+      #15191d 48%,
+      #101316 100%
+    );
+}
+
+body::after {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(
+      rgba(244, 246, 247, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(244, 246, 247, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      120deg,
+      rgba(0, 168, 90, 0.1),
+      transparent 28%
+    );
+  background-size:
+    44px 44px,
+    44px 44px,
+    100% 100%;
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent 88%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+summary,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+summary {
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+::selection {
+  background: rgba(0, 168, 90, 0.35);
+  color: #ffffff;
+}
+
+.section-pad {
+  @apply px-4 py-14 sm:px-6 md:py-24 lg:px-8;
+}
+
+.container-pro {
+  @apply mx-auto max-w-7xl;
+}
+
+.panel {
+  @apply rounded-3xl border border-white/10 bg-white/[.045] shadow-metal backdrop-blur;
+}
+
+.kicker {
+  @apply font-display text-xs font-semibold uppercase tracking-[0.24em] text-mechanic md:text-sm md:tracking-[0.28em];
+}
+
+.h2 {
+  @apply mt-2 font-display text-3xl font-bold tracking-tight text-technical sm:text-4xl md:mt-3 md:text-5xl;
+}
+
+.focus-ring {
+  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-mechanic;
+}
+
+.tech-lines {
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      45deg,
+      rgba(0, 168, 90, 0.16) 1px,
+      transparent 1px
+    );
+  background-size:
+    36px 36px,
+    72px 72px;
+}
+
+/* Contenido desplegable para la experiencia mobile */
+.mobile-details {
+  @apply mt-4 border-t border-white/10 pt-4;
+}
+
+.mobile-details summary {
+  @apply focus-ring flex min-h-11 cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold text-mechanic;
+}
+
+.mobile-details summary::after {
+  content: "+";
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.mobile-details[open] summary::after {
+  content: "−";
+}
+
+/* Ajustes específicos para mobile */
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 72px;
+  }
+
+  body::before {
+    background:
+      radial-gradient(
+        circle at 20% 6%,
+        rgba(0, 168, 90, 0.2),
+        transparent 20rem
+      ),
+      linear-gradient(
+        180deg,
+        #090b0d 0%,
+        #101512 48%,
+        #0b0d0f 100%
+      );
+  }
+
+  body::after {
+    opacity: 0.12;
+    background-size:
+      34px 34px,
+      34px 34px,
+      100% 100%;
+  }
+
+  .panel {
+    @apply rounded-2xl;
+  }
+
+  .section-pad {
+    @apply py-12;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

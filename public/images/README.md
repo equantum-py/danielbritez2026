@@ -1,12 +1,15 @@
-# Imágenes necesarias
+# Imágenes del portafolio
 
-No usar fotografías falsas ni rostros generados por IA. Hasta recibir material real, el sitio usa una composición técnica abstracta creada con CSS/SVG.
+No usar fotografías falsas, imágenes de stock para representar a Daniel ni rostros generados por inteligencia artificial.
 
-Agregar imágenes optimizadas en WebP o AVIF:
+El portafolio debe utilizar solamente fotografías reales de Daniel Brítez o imágenes reales de sus herramientas, trabajos y entorno profesional.
 
-1. `daniel-britez-principal.webp`: retrato vertical profesional.
-2. `daniel-britez-moto-taller.webp`: fotografía real de trabajo con una motocicleta.
-3. `daniel-britez-repuestos.webp`: área comercial o repuestos.
-4. `daniel-britez-diagnostico.webp`: herramientas, medición o diagnóstico.
+## Imagen principal disponible
 
-Recomendación: exportar a 1200px de ancho máximo, buena iluminación, fondo ordenado y sin marcas visibles no autorizadas.
+1. `daniel-britez-principal.png`  
+   Retrato profesional de Daniel Brítez utilizado en la sección principal del portafolio.
+
+Ruta:
+
+```text
+public/images/daniel-britez-principal.png
