@@ -31,7 +31,7 @@ export const portfolio = {
     availability: true,
     currentWork: "Biciclo’s Shop",
     previousWork: "RD Automóvil",
-    experienceSummary: "5 años en el rubro de talleres y motocicletas",
+    experienceSummary: "5 años de experiencia",
     cvPath: "/documents/cv-daniel-britez.pdf",
     cvAvailable: false,
   },
@@ -145,8 +145,8 @@ export const portfolio = {
 
     {
       company: "RD Automóvil",
-      role: "Auxiliar de mecánica automotriz",
-      meta: "Experiencia anterior",
+      role: "Mecánica automotriz",
+      meta: "Experiencia previa",
       intro:
         "Trabajé en RD Automóvil, donde adquirí experiencia en mecánica y mantenimiento de automóviles.",
       icon: Car,
@@ -198,7 +198,7 @@ export const portfolio = {
   ],
 
   objective:
-    "Mi objetivo es continuar desarrollándome profesionalmente en el sector de motocicletas, especialmente en mecánica de alta gama, diagnóstico técnico e inyección electrónica. Busco formar parte de una empresa donde pueda combinar mi experiencia mecánica, mis conocimientos sobre repuestos y mi capacidad de atención al cliente.",
+    "Busco seguir desarrollándome en mecánica de motocicletas, diagnóstico técnico e inyección electrónica, combinando mi experiencia de taller con mis conocimientos comerciales y de atención al cliente.",
 
   valuesIcons: [CheckCircle2, Lightbulb, Phone],
 } as const;

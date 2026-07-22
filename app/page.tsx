@@ -1,10 +1,10 @@
 import Image from "next/image";
 import {
   ArrowDown,
+  BriefcaseBusiness,
+  CheckCircle2,
   Download,
-  MapPin,
   MessageCircle,
-  Phone,
   Target,
 } from "lucide-react";
 
@@ -12,48 +12,28 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/Button";
 import { CopyPhone } from "@/components/ui/CopyPhone";
+import { ExpandableList } from "@/components/ui/ExpandableList";
 import { portfolio, whatsappUrl } from "@/data/portfolio";
 
-function HeroPhoto() {
-  return (
-    <div className="panel tech-lines relative min-h-[480px] overflow-hidden p-3 sm:p-4">
-      <div className="relative min-h-[450px] overflow-hidden rounded-[1.75rem] border border-mechanic/30 bg-carbon">
-        <Image
-          src="/images/daniel-britez-principal.png"
-          alt="Daniel Brítez, técnico mecánico de motocicletas y automóviles"
-          fill
-          priority
-          sizes="(max-width: 1024px) 100vw, 45vw"
-          className="object-cover object-top"
-        />
+const mobileSpecialtyIndexes = [0, 1, 2, 3, 4, 8] as const;
+const hiddenSpecialtyIndexes = [5, 6, 7] as const;
 
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon via-transparent to-transparent"
-          aria-hidden="true"
-        />
+const compactCompetencies = [
+  "Responsabilidad",
+  "Puntualidad",
+  "Atención al detalle",
+  "Trabajo en equipo",
+  "Resolución de problemas",
+  "Orientación al cliente",
+] as const;
 
-        <div
-          className="pointer-events-none absolute inset-0 opacity-20"
-          aria-hidden="true"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(0,168,90,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(0,168,90,.12) 1px, transparent 1px)",
-            backgroundSize: "42px 42px",
-          }}
-        />
-
-        <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-carbon/85 p-4 backdrop-blur-md sm:bottom-6 sm:left-6 sm:right-6">
-          <p className="kicker">Perfil profesional</p>
-
-          <p className="mt-1 text-sm leading-6 text-technical">
-            Técnico mecánico de motocicletas y automóviles, con experiencia
-            comercial en repuestos y atención al cliente.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
+const shortProcess = [
+  "Escucho",
+  "Analizo",
+  "Identifico",
+  "Resuelvo",
+  "Verifico",
+] as const;
 
 function SectionTitle({
   kicker,
@@ -65,15 +45,199 @@ function SectionTitle({
   text?: string;
 }) {
   return (
-    <div className="mb-10 max-w-3xl">
+    <div className="mb-6 max-w-3xl md:mb-10">
       <p className="kicker">{kicker}</p>
 
       <h2 className="h2">{title}</h2>
 
       {text ? (
-        <p className="mt-4 text-lg leading-8 text-muted">{text}</p>
+        <p className="mt-3 text-base leading-7 text-muted md:mt-4 md:text-lg md:leading-8">
+          {text}
+        </p>
       ) : null}
     </div>
+  );
+}
+
+function HeroPhoto() {
+  return (
+    <div className="panel tech-lines relative overflow-hidden p-3 sm:p-4 md:p-6">
+      <div className="relative aspect-[4/4.6] max-h-[390px] overflow-hidden rounded-[1.5rem] border border-mechanic/30 bg-carbon sm:aspect-[4/5] sm:max-h-[430px] md:min-h-[480px] md:max-h-none md:rounded-[2rem]">
+        <Image
+          src="/images/daniel-britez-principal.png"
+          alt="Daniel Brítez, técnico mecánico de motocicletas y automóviles"
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 45vw"
+          className="object-cover object-top"
+        />
+
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon/90 via-transparent to-transparent"
+          aria-hidden="true"
+        />
+
+        <div
+          className="pointer-events-none absolute inset-0 opacity-15"
+          aria-hidden="true"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(0,168,90,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(0,168,90,.12) 1px, transparent 1px)",
+            backgroundSize: "42px 42px",
+          }}
+        />
+
+        <div className="absolute bottom-3 left-3 right-3 rounded-xl border border-white/10 bg-carbon/85 px-3 py-2 text-center text-xs font-bold text-technical backdrop-blur-md md:bottom-6 md:left-6 md:right-6 md:rounded-2xl md:p-4 md:text-left md:text-sm">
+          Técnico mecánico y ejecutivo comercial
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MobileStat({
+  value,
+  label,
+}: {
+  value: string;
+  label: string;
+}) {
+  return (
+    <div className="panel grid min-h-20 place-items-center rounded-2xl p-3 text-center">
+      <strong className="font-display text-2xl leading-none text-technical">
+        {value}
+      </strong>
+
+      <span className="text-xs text-muted">{label}</span>
+    </div>
+  );
+}
+
+function ExperienceCard({
+  experience,
+  visibleItems,
+}: {
+  experience: (typeof portfolio.experience)[number];
+  visibleItems: number;
+}) {
+  const visible = experience.items.slice(0, visibleItems);
+  const hidden = experience.items.slice(visibleItems);
+  const Icon = experience.icon;
+
+  return (
+    <article className="panel p-4 sm:p-6 lg:p-8">
+      <div className="flex flex-col gap-3 md:flex-row md:items-start md:gap-4">
+        <div className="grid size-11 shrink-0 place-items-center rounded-2xl bg-mechanic/15 text-mechanic md:size-14">
+          <Icon size={22} />
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-mechanic md:text-sm">
+            {experience.meta}
+          </p>
+
+          <h3 className="mt-1 font-display text-2xl font-bold leading-none text-technical md:mt-2 md:text-4xl">
+            {experience.company}
+          </h3>
+
+          <p className="mt-1 text-sm font-semibold text-technical md:text-lg">
+            {experience.role}
+          </p>
+
+          <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted md:line-clamp-none md:max-w-3xl md:text-base md:leading-7">
+            {experience.intro}
+          </p>
+
+          <ExpandableList
+            visibleItems={visible}
+            hiddenItems={hidden}
+          />
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function SpecialtyItem({
+  label,
+  Icon,
+  compact = false,
+}: {
+  label: string;
+  Icon: (typeof portfolio.specialties)[number][1];
+  compact?: boolean;
+}) {
+  const mobileLabel = label
+    .replace(" de motocicletas", "")
+    .replace(", embrague y relación", "");
+
+  return (
+    <div
+      className={
+        compact
+          ? "panel flex min-h-16 items-center gap-2 rounded-2xl p-3 text-sm font-semibold"
+          : "panel flex items-center gap-4 rounded-2xl p-5"
+      }
+    >
+      <Icon
+        className="shrink-0 text-mechanic"
+        size={compact ? 18 : 24}
+      />
+
+      <span>{compact ? mobileLabel : label}</span>
+    </div>
+  );
+}
+
+function SpecialtyGrid() {
+  const mobileItems = mobileSpecialtyIndexes.map(
+    (index) => portfolio.specialties[index],
+  );
+
+  const hiddenItems = hiddenSpecialtyIndexes.map(
+    (index) => portfolio.specialties[index],
+  );
+
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-3 md:hidden">
+        {mobileItems.map(([label, Icon]) => (
+          <SpecialtyItem
+            key={label}
+            label={label}
+            Icon={Icon}
+            compact
+          />
+        ))}
+      </div>
+
+      <details className="mt-3 md:hidden">
+        <summary className="focus-ring min-h-11 cursor-pointer rounded-2xl border border-mechanic/30 bg-mechanic/10 px-4 py-3 text-sm font-bold text-mechanic">
+          Ver todas las especialidades
+        </summary>
+
+        <div className="mt-3 grid grid-cols-2 gap-3">
+          {hiddenItems.map(([label, Icon]) => (
+            <SpecialtyItem
+              key={label}
+              label={label}
+              Icon={Icon}
+              compact
+            />
+          ))}
+        </div>
+      </details>
+
+      <div className="hidden gap-4 md:grid md:grid-cols-2 lg:grid-cols-3">
+        {portfolio.specialties.map(([label, Icon]) => (
+          <SpecialtyItem
+            key={label}
+            label={label}
+            Icon={Icon}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -85,41 +249,37 @@ export default function Home() {
       <Header />
 
       <main id="inicio">
-        <section className="section-pad pt-32">
-          <div className="container-pro grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr]">
+        <section className="section-pad pt-24 md:pt-32">
+          <div className="container-pro grid items-center gap-6 lg:grid-cols-[1.05fr_.95fr] lg:gap-10">
             <div>
-              <p className="kicker">
-                Portafolio profesional · {p.city}
-              </p>
+              <p className="kicker">Portafolio profesional</p>
 
-              <h1 className="mt-4 font-display text-6xl font-bold uppercase leading-[.9] tracking-tight sm:text-7xl lg:text-8xl">
+              <h1 className="mt-3 font-display text-5xl font-bold leading-[0.9] tracking-tight text-technical sm:text-[52px] lg:text-8xl">
                 {p.name}
               </h1>
 
-              <p className="mt-5 text-2xl font-semibold text-technical">
+              <p className="mt-4 text-xl font-semibold text-technical md:text-2xl">
                 {p.title}
               </p>
 
-              <p className="mt-2 text-lg text-mechanic">
-                {p.subtitle}
-              </p>
-
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">
+              <p className="mt-3 max-w-2xl text-base leading-7 text-muted md:text-lg md:leading-8">
                 Soy técnico mecánico con experiencia en motocicletas,
-                automóviles, venta de repuestos y atención al cliente. Combino
-                mis conocimientos técnicos con la capacidad de asesorar,
-                diagnosticar problemas y ofrecer soluciones adecuadas para cada
-                necesidad.
+                automóviles, repuestos y atención al cliente.
               </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-mechanic/30 bg-mechanic/10 px-4 py-2 text-sm font-bold text-mechanic">
+                <BriefcaseBusiness size={16} />
+                Trabajo actual: {p.currentWork}
+              </div>
+
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row md:mt-8">
                 <Button
                   href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
                 >
                   <MessageCircle size={19} />
-                  Hablar por WhatsApp
+                  Contactar por WhatsApp
                 </Button>
 
                 <Button href="#experiencia" variant="secondary">
@@ -132,38 +292,18 @@ export default function Home() {
                     href={p.cvPath}
                     variant="secondary"
                     download
+                    className="hidden md:inline-flex"
                   >
                     <Download size={19} />
                     Descargar CV
                   </Button>
-                ) : (
-                  <span className="inline-flex min-h-12 items-center justify-center rounded-full border border-amber/35 bg-amber/10 px-5 text-sm font-semibold text-amber">
-                    CV pendiente de cargar
-                  </span>
-                )}
+                ) : null}
               </div>
 
-              <p className="mt-4 max-w-2xl text-base leading-7 text-technical">
-                Actualmente trabajo en Biciclo’s Shop, en el área comercial y
-                de atención al cliente, especializado en la venta e
-                identificación de repuestos para motocicletas.
-              </p>
-
-              <div className="mt-10 grid gap-3 sm:grid-cols-3">
-                {[
-                  p.experienceSummary,
-                  "Movilidad propia",
-                  "Disponibilidad laboral",
-                ].map((item) => (
-                  <div
-                    className="panel rounded-2xl p-4"
-                    key={item}
-                  >
-                    <p className="font-display text-2xl font-bold uppercase text-technical">
-                      {item}
-                    </p>
-                  </div>
-                ))}
+              <div className="mt-5 grid grid-cols-3 gap-2 md:mt-10 md:gap-3">
+                <MobileStat value="5 años" label="Experiencia" />
+                <MobileStat value="Sí" label="Movilidad" />
+                <MobileStat value="Sí" label="Disponible" />
               </div>
             </div>
 
@@ -175,21 +315,27 @@ export default function Home() {
           <div className="container-pro">
             <SectionTitle
               kicker="Perfil"
-              title="Técnica, comercio y criterio de taller"
-              text="Integro experiencia práctica con motocicletas y automóviles con atención comercial de repuestos, presupuestos y seguimiento de clientes."
+              title="Qué sé hacer"
+              text="Integro mecánica de motocicletas, mantenimiento automotriz y atención comercial de repuestos."
             />
 
-            <div className="grid gap-6 lg:grid-cols-3">
+            <div className="grid gap-3 md:gap-6 lg:grid-cols-3">
               {portfolio.strengths.map(
                 ({ title, text, icon: Icon }) => (
-                  <article className="panel p-6" key={title}>
-                    <Icon className="text-mechanic" size={34} />
+                  <article
+                    className="panel p-4 sm:p-6"
+                    key={title}
+                  >
+                    <Icon
+                      className="text-mechanic"
+                      size={26}
+                    />
 
-                    <h3 className="mt-5 font-display text-3xl font-bold uppercase">
+                    <h3 className="mt-3 font-display text-xl font-bold text-technical md:text-3xl">
                       {title}
                     </h3>
 
-                    <p className="mt-3 leading-7 text-muted">
+                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted md:line-clamp-none md:text-base md:leading-7">
                       {text}
                     </p>
                   </article>
@@ -197,7 +343,24 @@ export default function Home() {
               )}
             </div>
 
-            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+            <details className="mt-3 md:hidden">
+              <summary className="focus-ring min-h-11 cursor-pointer rounded-2xl border border-mechanic/30 bg-mechanic/10 px-4 py-3 text-sm font-bold text-mechanic">
+                Ver perfil completo
+              </summary>
+
+              <div className="mt-3 grid gap-3">
+                {portfolio.profile.map((text) => (
+                  <p
+                    className="rounded-2xl border border-white/10 bg-carbon/45 p-4 text-sm leading-6 text-muted"
+                    key={text}
+                  >
+                    {text}
+                  </p>
+                ))}
+              </div>
+            </details>
+
+            <div className="mt-8 hidden gap-4 md:grid lg:grid-cols-3">
               {portfolio.profile.map((text) => (
                 <p
                   className="rounded-3xl border border-white/10 bg-carbon/45 p-6 leading-8 text-muted"
@@ -214,61 +377,17 @@ export default function Home() {
           <div className="container-pro">
             <SectionTitle
               kicker="Experiencia"
-              title="Trayectoria laboral"
+              title="Experiencia laboral"
             />
 
-            <div className="space-y-6">
-              {portfolio.experience.map(
-                ({
-                  company,
-                  role,
-                  meta,
-                  intro,
-                  items,
-                  icon: Icon,
-                }) => (
-                  <article
-                    className="panel p-6 md:p-8"
-                    key={company}
-                  >
-                    <div className="flex flex-col gap-4 md:flex-row md:items-start">
-                      <div className="grid size-14 shrink-0 place-items-center rounded-2xl bg-mechanic/15 text-mechanic">
-                        <Icon />
-                      </div>
-
-                      <div className="flex-1">
-                        <p className="text-sm font-bold uppercase tracking-[.2em] text-mechanic">
-                          {meta}
-                        </p>
-
-                        <h3 className="mt-2 font-display text-4xl font-bold uppercase">
-                          {company}
-                        </h3>
-
-                        <p className="mt-1 text-lg text-technical">
-                          {role}
-                        </p>
-
-                        <p className="mt-4 max-w-3xl leading-7 text-muted">
-                          {intro}
-                        </p>
-
-                        <ul className="mt-5 grid gap-3 md:grid-cols-2">
-                          {items.map((item) => (
-                            <li
-                              className="flex gap-3 text-sm leading-6 text-muted"
-                              key={item}
-                            >
-                              <span className="mt-2 size-1.5 shrink-0 rounded-full bg-mechanic" />
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </article>
-                ),
-              )}
+            <div className="space-y-4 md:space-y-6">
+              {portfolio.experience.map((experience) => (
+                <ExperienceCard
+                  key={experience.company}
+                  experience={experience}
+                  visibleItems={4}
+                />
+              ))}
             </div>
           </div>
         </section>
@@ -277,61 +396,66 @@ export default function Home() {
           <div className="container-pro">
             <SectionTitle
               kicker="Especialidades"
-              title="Áreas técnicas y comerciales"
+              title="Especialidades principales"
             />
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {portfolio.specialties.map(([label, Icon]) => (
-                <div
-                  className="panel flex items-center gap-4 rounded-2xl p-5"
-                  key={label}
-                >
-                  <Icon className="shrink-0 text-mechanic" />
-
-                  <span className="font-semibold">
-                    {label}
-                  </span>
-                </div>
-              ))}
-            </div>
+            <SpecialtyGrid />
           </div>
         </section>
 
         <section className="section-pad">
-          <div className="container-pro grid gap-6 lg:grid-cols-2">
-            <div className="panel p-8">
+          <div className="container-pro grid gap-4 lg:grid-cols-2 lg:gap-6">
+            <div className="panel p-4 sm:p-6 lg:p-8">
               <SectionTitle
                 kicker="Proceso"
-                title="Método de trabajo"
+                title="Cómo trabajo"
+                text="Analizo cada necesidad antes de recomendar una reparación o un repuesto."
               />
 
-              {portfolio.process.map((step, index) => (
-                <div
-                  className="flex gap-4 border-l border-white/10 pb-6 pl-5 last:pb-0"
-                  key={step}
-                >
-                  <span className="-ml-8 grid size-10 shrink-0 place-items-center rounded-full bg-mechanic font-bold text-carbon">
-                    {index + 1}
-                  </span>
+              <div className="grid gap-2 md:hidden">
+                {shortProcess.map((step, index) => (
+                  <div
+                    className="flex items-center gap-3"
+                    key={step}
+                  >
+                    <span className="grid size-8 shrink-0 place-items-center rounded-full bg-mechanic text-sm font-bold text-carbon">
+                      {index + 1}
+                    </span>
 
-                  <p className="pt-2 font-semibold">
-                    {step}
-                  </p>
-                </div>
-              ))}
+                    <p className="font-semibold text-technical">
+                      {step}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="hidden md:block">
+                {portfolio.process.map((step, index) => (
+                  <div
+                    className="flex gap-4 border-l border-white/10 pb-6 pl-5 last:pb-0"
+                    key={step}
+                  >
+                    <span className="-ml-8 grid size-10 shrink-0 place-items-center rounded-full bg-mechanic font-bold text-carbon">
+                      {index + 1}
+                    </span>
+
+                    <p className="pt-2 font-semibold">{step}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="panel p-8">
+            <div className="panel p-4 sm:p-6 lg:p-8">
               <SectionTitle
                 kicker="Competencias"
                 title="Forma de trabajar"
-                text="En cada trabajo procuro actuar con responsabilidad, puntualidad, atención al detalle y compromiso. Valoro el trabajo en equipo, el buen trato con los clientes y el aprendizaje constante."
+                text="Procuro actuar con responsabilidad, puntualidad, atención al detalle y compromiso."
               />
 
-              <div className="flex flex-wrap gap-3">
-                {portfolio.competencies.map((competency) => (
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                {compactCompetencies.map((competency) => (
                   <span
-                    className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-muted"
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs text-muted md:px-4 md:text-sm"
                     key={competency}
                   >
                     {competency}
@@ -339,14 +463,17 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="mt-8 rounded-3xl border border-mechanic/25 bg-mechanic/10 p-6">
-                <Target className="text-mechanic" />
+              <div className="mt-5 rounded-2xl border border-mechanic/25 bg-mechanic/10 p-4 md:mt-8 md:rounded-3xl md:p-6">
+                <Target
+                  className="text-mechanic"
+                  size={24}
+                />
 
-                <h3 className="mt-4 font-display text-3xl font-bold uppercase">
+                <h3 className="mt-3 font-display text-2xl font-bold text-technical md:text-3xl">
                   Objetivo profesional
                 </h3>
 
-                <p className="mt-3 leading-7 text-muted">
+                <p className="mt-2 text-sm leading-6 text-muted md:text-base md:leading-7">
                   {portfolio.objective}
                 </p>
               </div>
@@ -354,58 +481,79 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contacto" className="section-pad">
+        <section
+          id="contacto"
+          className="section-pad pb-24 md:pb-20"
+        >
           <div className="container-pro">
-            <div className="panel grid gap-8 p-8 lg:grid-cols-[.9fr_1.1fr]">
+            <div className="panel grid gap-5 p-4 sm:p-6 lg:grid-cols-[.9fr_1.1fr] lg:p-8">
               <div>
-                <p className="kicker">
-                  Contacto
-                </p>
+                <p className="kicker">Contacto</p>
 
-                <h2 className="h2">
-                  Hablemos
-                </h2>
+                <h2 className="h2">Hablemos</h2>
 
-                <p className="mt-4 leading-8 text-muted">
+                <p className="mt-3 text-sm leading-6 text-muted md:text-base md:leading-8">
                   Estoy disponible para oportunidades laborales en
                   concesionarias, talleres especializados, empresas de repuestos
-                  y organizaciones del sector automotor. Podés comunicarte
-                  conmigo directamente por WhatsApp o teléfono.
+                  y organizaciones del sector automotor.
                 </p>
               </div>
 
-              <div className="grid gap-4">
-                <a
-                  className="focus-ring panel flex items-center gap-4 rounded-2xl p-5"
+              <div className="grid gap-3">
+                <Button
                   href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
+                  className="w-full"
                 >
-                  <MessageCircle className="shrink-0 text-mechanic" />
-                  <span>WhatsApp: {p.phoneDisplay}</span>
-                </a>
+                  <MessageCircle size={19} />
+                  Contactar por WhatsApp
+                </Button>
 
-                <a
-                  className="focus-ring panel flex items-center gap-4 rounded-2xl p-5"
-                  href={`tel:${p.phoneHref}`}
-                >
-                  <Phone className="shrink-0 text-mechanic" />
-                  <span>Teléfono: {p.phoneDisplay}</span>
-                </a>
+                <div className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-3">
+                  <a
+                    className="focus-ring rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center text-muted"
+                    href={`tel:${p.phoneHref}`}
+                  >
+                    Llamar
+                  </a>
 
-                <div className="panel flex items-center gap-4 rounded-2xl p-5">
-                  <MapPin className="shrink-0 text-mechanic" />
+                  <CopyPhone />
 
-                  <span>
-                    {p.city} · Movilidad propia · Disponibilidad laboral
+                  <span className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center text-muted sm:col-span-1">
+                    {p.city}
                   </span>
                 </div>
 
-                <p className="rounded-2xl border border-amber/30 bg-amber/10 p-4 text-sm text-amber">
-                  Correo electrónico pendiente de completar.
-                </p>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <span className="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-muted">
+                    <CheckCircle2
+                      className="mr-2 inline text-mechanic"
+                      size={16}
+                    />
+                    Movilidad propia
+                  </span>
 
-                <CopyPhone />
+                  <span className="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-muted">
+                    <CheckCircle2
+                      className="mr-2 inline text-mechanic"
+                      size={16}
+                    />
+                    Disponibilidad
+                  </span>
+                </div>
+
+                {p.cvAvailable ? (
+                  <Button
+                    href={p.cvPath}
+                    variant="secondary"
+                    download
+                    className="w-full"
+                  >
+                    <Download size={19} />
+                    Descargar CV
+                  </Button>
+                ) : null}
               </div>
             </div>
           </div>
@@ -413,13 +561,13 @@ export default function Home() {
       </main>
 
       <a
-        className="focus-ring fixed bottom-5 right-5 z-40 grid size-14 place-items-center rounded-full bg-mechanic text-carbon shadow-metal"
+        className="focus-ring fixed bottom-4 right-4 z-40 grid size-12 place-items-center rounded-full bg-mechanic text-carbon shadow-metal md:size-14"
         aria-label="Abrir conversación con Daniel por WhatsApp"
         href={whatsappUrl}
         target="_blank"
         rel="noreferrer"
       >
-        <MessageCircle />
+        <MessageCircle size={22} />
       </a>
 
       <Footer />
